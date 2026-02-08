@@ -15,8 +15,60 @@
       min-height: 100vh;
       margin: 0;
       text-align: center;
+      overflow: hidden;
     }
 
+    /* ❤️ Floating hearts background */
+    .hearts {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      width: 16px;
+      height: 16px;
+      background: #ff4d6d;
+      transform: rotate(45deg);
+      animation: floatUp linear infinite;
+      opacity: 0.6;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: #ff4d6d;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -8px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -8px;
+      top: 0;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) rotate(45deg);
+        opacity: 0.6;
+      }
+      to {
+        transform: translateY(-110vh) rotate(45deg);
+        opacity: 0;
+      }
+    }
+
+    /* 💌 Card */
     .container {
       background: white;
       padding: 32px;
@@ -24,6 +76,8 @@
       box-shadow: 0 20px 40px rgba(0,0,0,0.1);
       max-width: 380px;
       width: 100%;
+      position: relative;
+      z-index: 1;
     }
 
     img {
@@ -40,13 +94,38 @@
 </head>
 
 <body>
+
+<!-- ❤️ Background hearts -->
+<div class="hearts"></div>
+
+<!-- 💌 Content -->
 <div class="container">
   <img src="media/IMG_8565.JPG" alt="Us again">
-
   <h1>
-    Thanks for saying Yes! Love you !<br>
-    Now nobody can say I <strong>DON’T</strong> have rizz :)
+    Thanks for saying yes. I love you 💖<br>
+    And hey… who says I <strong>DON’T</strong> have rizz? :)
   </h1>
 </div>
+
+<script>
+  const heartsContainer = document.querySelector(".hearts");
+
+  function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = 5 + Math.random() * 5 + "s";
+    heart.style.opacity = 0.3 + Math.random() * 0.5;
+    heart.style.transform = `scale(${0.6 + Math.random() * 0.8}) rotate(45deg)`;
+
+    heartsContainer.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 12000);
+  }
+
+  setInterval(createHeart, 300);
+</script>
+
 </body>
 </html>
